@@ -1,0 +1,13 @@
+gitpython
+pymupdf4llm
+langchain
+langchain-community
+langchain-text-splitters
+langchain-ollama
+langchain-chroma
+chromadb
+rank-bm25
+sentence-transformers
+streamlit
+python-dotenv
+pytest
