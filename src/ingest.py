@@ -4,12 +4,17 @@ from pathlib import Path
 import pymupdf4llm
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+import shutil
+from langchain_ollama import OllamaEmbeddings
+from langchain_chroma import Chroma
 
 CORPUS_URL = "https://github.com/panoCoro/nlp-course-corpus"
 CORPUS_DIR = "data/corpus"
 TEXT_SUFFIXES = [".txt", ".md", ".py"]
 CHUNK_SIZE = 800
 CHUNK_OVERLAP = 100
+EMBED_MODEL = "nomic-embed-text"
+CHROMA_DIR = "chroma_db"
 
 def get_corpus():
     if not os.path.exists(CORPUS_DIR):
@@ -50,7 +55,18 @@ def chunk_documents(documents, chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLA
     print(f"Split {len(documents)} documents into {len(chunks)} chunks.")
     return chunks
 
+def embed_and_store_chunks(chunks):
+    if os.path.exists(CHROMA_DIR):
+        shutil.rmtree(CHROMA_DIR)
+        print(f"Removed existing {CHROMA_DIR}.")
+    embeddings = OllamaEmbeddings(model=EMBED_MODEL)
+    print(f"Embedding {len(chunks)} chunks with {EMBED_MODEL}...")
+    db = Chroma.from_documents(documents = chunks, embedding = embeddings, persist_directory = CHROMA_DIR, collection_metadata = {"hnsw:space": "cosine"})
+    print(f"Stored {len(chunks)} in {CHROMA_DIR}.")
+    return db
+
 if __name__ == "__main__":
     get_corpus()
     documents = load_corpus()
     chunks = chunk_documents(documents)
+    db = embed_and_store_chunks(chunks)
