@@ -12,7 +12,10 @@ if st.button("Ask Classmate") and question.strip():
         answer, sources = generate_answer(question.strip())
     st.subheader("Answer:")
     st.write(answer)
-    if sources:
+    refused = ("could not find an answer in the materials" in answer.lower() or "i don't know" in answer.lower())
+    if sources and not refused:
         st.subheader("Sources:")
         for s in sources:
             st.markdown(f"- {s}")
+    elif refused and sources:
+        st.caption("The answer could not be found in the materials, but here are the closest sources that were searched: " + ", ".join(sources))
