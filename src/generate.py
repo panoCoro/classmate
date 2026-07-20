@@ -1,5 +1,5 @@
 from langchain_ollama import ChatOllama
-from retrieve import retrieve
+from src.retrieve import retrieve
 
 LLM_MODEL = "llama3.2:3b"
 TEMPERATURE = 0.2
