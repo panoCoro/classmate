@@ -3,15 +3,25 @@ from langchain_core.documents import Document
 from rank_bm25 import BM25Okapi
 from langchain_ollama import OllamaEmbeddings
 from langchain_chroma import Chroma
+from sentence_transformers import CrossEncoder
 
 EMBED_MODEL = "nomic-embed-text"
 CHROMA_DIR = "chroma_db"
 TOP_K = 5   
 CANDIDATES = 20
+RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+RERANK_CANDIDATES = 20
 RRF_K = 60
 
 _DB = None
 _BM25 = None
+_RERANKER = None
+
+def get_reranker():
+    global _RERANKER
+    if _RERANKER is None:
+        _RERANKER = CrossEncoder(RERANKER_MODEL)
+    return _RERANKER
 
 def get_db():
     global _DB
@@ -42,7 +52,7 @@ def bm25_search(question, n = CANDIDATES):
     ranked = sorted(range(len(texts)), key=lambda i: scores[i], reverse=True)
     return [(texts[i], metadatas[i]) for i in ranked[:n]]
     
-def retrieve(question, top_k=TOP_K):
+def hybrid_candidates(question, n= RERANK_CANDIDATES):
     fused = {}
     docs = {}
     
@@ -57,13 +67,26 @@ def retrieve(question, top_k=TOP_K):
             docs[text] = Document(page_content=text, metadata=meta)
             
     ranked = sorted(fused.items(), key=lambda item: item[1], reverse=True)
-    return [(docs[key], score) for key, score in ranked[:top_k]]
-    
+    return [(docs[key], score) for key, score in ranked[:n]]
+
+def rerank(question, candidates, k= TOP_K):
+    pairs = [(question, doc.page_content) for doc, _rrf in candidates]
+    scores = get_reranker().predict(pairs)
+    ranked = sorted(zip(candidates, scores), key=lambda item: item[1], reverse=True)
+    return [(doc, score) for (doc, _rrf), score in ranked[:k]]
+
+def retrieve(question, k=TOP_K):
+    candidates = hybrid_candidates(question)
+    return rerank(question, candidates, k)
+
+
+
+
 
 if __name__ == "__main__":
     question = input("Enter your question: ")
     results = retrieve(question)
     for i, (chunk, score) in enumerate(results):
-        print(f"\nResult {i+1} | Score: {score:.4f}")
+        print(f"\nResult {i+1} | Score: {score:.2f}")
         print(f"Source: {chunk.metadata['source']}")
-        print(f"Content: {chunk.page_content[:500]}...")  
+        print(f"Content: {chunk.page_content[:300]}...")  
