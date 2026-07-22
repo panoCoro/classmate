@@ -40,11 +40,11 @@ def generate_answer(question):
         src = chunk.metadata["source"]
         if src not in sources:
             sources.append(src)
-    return response.content, sources
+    return response.content, sources, results
 
 if __name__ == "__main__":
     question = input("Ask Classmate: ") 
-    answer, sources = generate_answer(question) 
+    answer, sources, results = generate_answer(question) 
     print(f"\nAnswer: {answer}\n")
     print("Sources:")
     for s in sources:

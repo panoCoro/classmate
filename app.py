@@ -1,5 +1,6 @@
 import streamlit as st
 from src.generate import generate_answer
+from src.verify import faithfulness
 
 st.set_page_config(page_title="Classmate Chatbot", page_icon=":robot_face:")
 
@@ -9,10 +10,17 @@ question = st.text_input("Enter your question:", "")
 
 if st.button("Ask Classmate") and question.strip():
     with st.spinner("Searching the module materials..."):
-        answer, sources = generate_answer(question.strip())
+        answer, sources, results = generate_answer(question.strip())
     st.subheader("Answer:")
     st.write(answer)
     refused = ("could not find an answer in the materials" in answer.lower() or "i don't know" in answer.lower())
+    if not refused:
+        score, details = faithfulness(answer, results)
+        if score is not None:
+            st.caption(f"Faithfulness Score (weakest claim): {score:.2f}")
+            with st.expander("Per-sentence support scores"):
+                for sent, sup in details:
+                    st.markdown(f"- **{sup:.2f}** - {sent}")
     if sources and not refused:
         st.subheader("Sources:")
         for s in sources:
