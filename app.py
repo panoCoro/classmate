@@ -1,5 +1,5 @@
 import streamlit as st
-from src.generate import generate_answer
+from src.generate import generate_answer, REFUSAL_NEEDLE
 from src.verify import faithfulness
 import time 
 
@@ -15,13 +15,12 @@ if st.button("Ask Classmate") and question.strip():
         answer, sources, results = generate_answer(question.strip())
     st.subheader("Answer:")
     st.write(answer)
-    refused = ("could not find an answer in the materials" in answer.lower() or "i don't know" in answer.lower())
+    refused = (REFUSAL_NEEDLE in answer.lower() or "i don't know" in answer.lower())
     if not refused:
         t_v = time.perf_counter()
         with st.spinner("Verifying faithfulness of the answer..."):
             score, details = faithfulness(answer, results)
             print(f"[timing] faithfulness: {time.perf_counter() - t_v:.2f} seconds")
-        score, details = faithfulness(answer, results)
         if score is not None:
             st.caption(f"Faithfulness Score (weakest claim): {score:.2f}")
             with st.expander("Per-sentence support scores"):
@@ -35,3 +34,4 @@ if st.button("Ask Classmate") and question.strip():
             st.markdown(f"- {s}")
     elif refused and sources:
         st.caption("The answer could not be found in the materials, but here are the closest sources that were searched: " + ", ".join(sources))
+        

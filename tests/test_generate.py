@@ -13,4 +13,7 @@ def test_prompt_question_and_verbatim_refusal():
     prompt = build_prompt(build_context(TEST), "what is tf-idf?")
     assert "what is tf-idf?" in prompt
     assert "could not find this in the course materials" in prompt.lower()
-    
+
+def test_refusal_needle():
+    from src.generate import REFUSAL_NEEDLE, PROMPT_TEMPLATE
+    assert REFUSAL_NEEDLE in PROMPT_TEMPLATE.lower()

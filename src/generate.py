@@ -6,6 +6,7 @@ LLM_MODEL = "llama3.2:3b"
 TEMPERATURE = 0.2
 NUM_CTX = 4096
 
+REFUSAL_NEEDLE = "could not find"
 PROMPT_TEMPLATE = """You are Classmate chatbot, a teaching assistant
 for the Natural Language Processing module. 
 
