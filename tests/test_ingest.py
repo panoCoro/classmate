@@ -2,7 +2,7 @@ from langchain_core.documents import Document
 from src.ingest import chunk_documents
 
 def make_docs():
-    long_text = "Natural Language Processing content for testing."
+    long_text = "Natural Language Processing content for testing. " * 60
     return [Document(page_content=long_text, metadata={"source": "test_source1"}),
             Document(page_content=long_text, metadata={"source": "test_source2"})]
 

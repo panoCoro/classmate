@@ -62,7 +62,7 @@ def embed_and_store_chunks(chunks):
     embeddings = OllamaEmbeddings(model=EMBED_MODEL)
     print(f"Embedding {len(chunks)} chunks with {EMBED_MODEL}...")
     db = Chroma.from_documents(documents = chunks, embedding = embeddings, persist_directory = CHROMA_DIR, collection_metadata = {"hnsw:space": "cosine"})
-    print(f"Stored {len(chunks)} in {CHROMA_DIR}.")
+    print(f"Stored {len(chunks)} chunks in {CHROMA_DIR}.")
     return db
 
 if __name__ == "__main__":

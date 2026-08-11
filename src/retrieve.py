@@ -73,7 +73,7 @@ def rerank(question, candidates, k= TOP_K):
     pairs = [(question, doc.page_content) for doc, _rrf in candidates]
     scores = get_reranker().predict(pairs)
     ranked = sorted(zip(candidates, scores), key=lambda item: item[1], reverse=True)
-    return [(doc, score) for (doc, _rrf), score in ranked[:k]]
+    return [(doc, float(score)) for (doc, _rrf), score in ranked[:k]]
 
 def retrieve(question, k=TOP_K):
     candidates = hybrid_candidates(question)

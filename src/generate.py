@@ -12,7 +12,7 @@ for the Natural Language Processing module.
 
 1. You are given the excerpts from the corpus below.
 2. You are also given a question from a student.
-3. Answer based on the excerpts and the question. If the excerpts do not contain enough information, say "I could not find this in the course materials".
+3. Answer based on the excerpts and the question. If the excerpts do not contain enough information, say "I could not find this in the course materials" and DO NOT add anything after that.
 4. Do not assume and do not use any information that is not present in the excerpts.
 5. Keep the answer concise and to the point. Avoid unnecessary details.
 6. Answer directly and do not repeat the question in your answer.
@@ -29,7 +29,7 @@ def build_prompt(context, question):
 def build_context(results):
     parts = []
     for i, (chunk, score) in enumerate(results):
-        parts.append(f"[{i+1}] (from {chunk.metadata['source']}\nContent: {chunk.page_content}")
+        parts.append(f"[{i+1}] (from {chunk.metadata['source']})\n{chunk.page_content}")
     return "\n\n".join(parts)
 
 def generate_answer(question):
