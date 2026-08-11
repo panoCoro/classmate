@@ -7,6 +7,11 @@ TEMPERATURE = 0.2
 NUM_CTX = 4096
 
 REFUSAL_NEEDLE = "could not find"
+
+def is_refusal(answer):
+    a = answer.lower().replace("\u2019", "'")
+    return REFUSAL_NEEDLE in a or "i don't know" in a 
+
 PROMPT_TEMPLATE = """You are Classmate chatbot, a teaching assistant
 for the Natural Language Processing module. 
 

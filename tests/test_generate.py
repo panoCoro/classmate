@@ -17,3 +17,9 @@ def test_prompt_question_and_verbatim_refusal():
 def test_refusal_needle():
     from src.generate import REFUSAL_NEEDLE, PROMPT_TEMPLATE
     assert REFUSAL_NEEDLE in PROMPT_TEMPLATE.lower()
+    
+def test_refusal_detection():
+    from src.generate import is_refusal
+    assert is_refusal("I could not find this in the course materials")
+    assert is_refusal("I don't know the answer to that")
+    assert not is_refusal("The answer is 42")

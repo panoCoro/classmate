@@ -1,5 +1,5 @@
 import streamlit as st
-from src.generate import generate_answer, REFUSAL_NEEDLE
+from src.generate import generate_answer, REFUSAL_NEEDLE, is_refusal
 from src.verify import faithfulness
 import time 
 
@@ -15,7 +15,7 @@ if st.button("Ask Classmate") and question.strip():
         answer, sources, results = generate_answer(question.strip())
     st.subheader("Answer:")
     st.write(answer)
-    refused = (REFUSAL_NEEDLE in answer.lower() or "i don't know" in answer.lower())
+    refused = is_refusal(answer)
     if not refused:
         t_v = time.perf_counter()
         with st.spinner("Verifying faithfulness of the answer..."):
