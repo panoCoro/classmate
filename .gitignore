@@ -222,3 +222,4 @@ chroma_db/
 data/
 
 classmate_all.txt
+.DS_Store

@@ -1,0 +1,47 @@
+﻿id,category,question,answer,sources,correct ,right_sources ,should_have_refused ,comments
+A01,admin,when is the coursework deadline?,"The coursework deadline is not explicitly mentioned in the provided excerpts. However, it is mentioned that the programming portfolio will be released week 6 and due week 9 (exact dates to be determined).",Week 6.pdf; Week 1 admin.pdf; Key module information.pdf,YES,YES,NO,
+A02,admin,when is the coursework due?,The coursework is due week 9 (exact dates tbd).,Week 6.pdf; Week 1 admin.pdf; Key module information.pdf,YES,YES,NO,
+oosz01,oos_zero,bread,I could not find this in the course materials.,Week 8.pdf; Week 3.pdf; Week 1.pdf,YES,N/A,YES,
+oose01,oos_echo,How do I make coffee,"Based on the excerpts from the corpus, I could not find any information about how to make coffee in the course materials.",Week 2.pdf; Week 1.pdf; Lab Sheet Week 5.pdf; Lab Sheet Week 2.pdf,YES,N/A,YES,
+oose02,oos_echo,Where's France?,"According to excerpt [1], France is the country where Paris is located.",Week 6 summarisation-test.py; Week 5.pdf; Week 3.pdf; Week 2.pdf,YES,N/A,YES,It exists as an example in the corpus.
+F01,factual,What's RAG?,"Retrieval-Augmented Generation (RAG) is a method that uses Information Retrieval (IR) to retrieve relevant documents from a collection, and then uses a Large Language Model (LLM) to generate an answer conditioned on the retrieved documents.",Week 7.pdf,YES,YES,NO,
+F02,factual,What's the difference between sparse and dense vectors? what other names do they have?,"Sparse vectors are often referred to as ""term-document matrices"" or simply ""vector representations of words"". Dense vectors, on the other hand, are typically called ""word embeddings"", such as Word2vec or tf-idf.",Week 2.pdf; Week 7.pdf,NO,YES,NO,Factual error
+F03,factual,What's the difference between between encoders only and decoders only models?,"Based on the excerpts, encoders are usually finetuned (trained on supervised data) for classification tasks, whereas decoders are generative models that take as input a series of tokens and iteratively generate an output token one at a time. Decoders are left-to-right (causal, autoregressive).",Week 5.pdf; Week 1 admin.pdf; Week 8.pdf,YES,YES,NO,
+F04,factual,Explain self-attention,"Self-attention is a mechanism for selectively attending to and integrating information from surrounding tokens in a sequence, helping compute the embedding for a token by doing a weighted sum of vectors. It's left-to-right and used in bidirectional encoders to map sequences of input embeddings to sequences of output embeddings, contextualizing output vectors using information from the entire input sequence.",Week 6.pdf; Week 8.pdf,PARTIAL,YES,NO,Bidirectional and left-to-right in the same sentence
+A03,admin,Is attendance mandatory?,"According to the excerpts, active participation in lab sessions is crucial to effective learning and a requirement that contributes to the intellectual development of all involved. However, it does not explicitly state that attendance is mandatory.",Key module information.pdf; Week 1 admin.pdf,YES,YES,NO,
+F05,factual,Is linguistics prescriptive?,"No, according to the excerpts, linguistics is not prescriptive. It is described as a study of human language as a natural phenomenon, with no such thing as correct or incorrect language.",Week 1.pdf,YES,YES,NO,
+F06,factual,What is the difference between synonymy and similarity? Give examples.,"Synonymy refers to words that have the same meaning in some or all contexts, while similarity refers to words that share some element of meaning but are not necessarily synonymous. For example, ""car"" and ""bicycle"" are similar in meaning because they both refer to vehicles, but they are not synonyms because they do not convey exactly the same meaning.
+
+In contrast, ""coffee"" and ""cup"" are related in meaning because they are often used together, but they are not synonyms because they have different meanings.",Week 2.pdf; Week 7.pdf,PARTIAL,YES,NO,No synonyms example
+F07,factual,What is the difference between a system prompt and a user prompt?,"A system prompt is automatically concatenated to a user prompt, whereas a user prompt is what the user inputs directly. The system prompt serves as a learning signal for the model, while the user prompt is the actual input from the user.",Week 5.pdf; Week 7.pdf,PARTIAL,YES ,NO,Slides refer to prompts in general as learning signal 
+oosz02,oos_zero,What's the weather like today?,I could not find this in the course materials.,Week 4.pdf; Week 3.pdf; Week 1 admin.pdf,YES,N/A,YES,
+oosz03,oos_zero,What is the difference between soccer and football?,"The excerpts do not provide a clear definition or explanation of synonymy. However, excerpt [2] mentions that there are probably no examples of perfect synonymy in language, as even if many aspects of meaning are identical, differences based on politeness, slang, register, genre, etc. can occur.",Week 1.pdf; Week 2.pdf; Week 1 admin.pdf,NO ,N/A,YES,Didn’t refuse/ answered from synonymy chunk
+A04,admin,Who is the module convenor? how do I contact them?,"The module convenor is Dr. Paul Nulty, and you can contact him via email at p.nulty@bbk.ac.uk.",Key module information.pdf; README.md; Week 1 admin.pdf,YES,YES,NO,
+C01,code,How do I install the transformers library?,"To install the transformers library, follow the installation process here: https://huggingface.co/docs/transformers/en/installation. You only need to do one of the options - pip, uv, conda, or source install.",Lab Sheet Week 6.pdf; Lab Sheet Week 2.pdf; Week 6.pdf; Week 6 lab-scripttest.py,YES,YES,NO,
+C02,code,Which model does the nli task use?,The Deberta-small-long-nli model on HuggingFace is used for natural language inference tasks.,Lab Sheet Week 6.pdf; Week 4.pdf; Week 5.pdf; Week 7.pdf; Week 8.pdf,YES,YES,NO,"deberta-small-long-nli cited in the lab sheet, roberta-large-mnli used in nli.py. The rubric assumed the script, the system answered from the lab sheet. Both correct, grounded in the corpus. "
+C03,code,Which spacy model does the syntax example load?,"The syntax example loads the ""en_core_web_sm"" model.",Lab Sheet Week 1.pdf; Week 3 benepar-example.py; Week 3 syntax-examples.py; Lab Sheet Week 6.pdf,YES,YES,NO,
+C04,code,How do I load a model with AutoModelForCausalLM?,"To load a model with `AutoModelForCausalLM`, you need to use the `from_pretrained` method and specify the model name. For example:
+
+```python
+model = AutoModelForCausalLM.from_pretrained(""HuggingFaceTB/SmolLM2-135M"")
+```
+
+This loads the ""HuggingFaceTB/SmolLM2-135M"" model, which is a causal language model.",Week 6 lab-scripttest.py; Week 6 query-test.py; Week 3 benepar-example.py; Lab Sheet Week 1.pdf,YES,YES,NO,
+F08,factual,What does retrieval augmented generation do?,Retrieval Augmented Generation is a technique that uses Information Retrieval (IR) to retrieve relevant documents from a collection and then uses a Large Language Model (LLM) to generate an answer conditioned on the retrieved documents.,Week 7.pdf; Week 8.pdf,YES,YES,NO,
+F09,factual,Can you tell me what self attention is?,Self-attention is a mechanism for helping compute the embedding for a token by selectively attending to and integrating information from surrounding tokens (at the previous layer). It's a method for doing a weighted sum of vectors.,Week 6.pdf; Week 8.pdf,YES,YES,NO,
+C05,code,What model is used for natural language inference in the lab in week 6?,The Deberta-small-long-nli model on HuggingFace is used for natural language inference in the lab in week 6.,Lab Sheet Week 6.pdf; Lab Sheet Week 5.pdf; Week 8.pdf; Week 5.pdf,YES,YES,NO,
+oose03,oos_echo,What's your favorite cake?,I could not find this in the course materials.,Week 6 lab-scripttest.py; Week 3 syntax-examples.py; Week 5.pdf; Lab Sheet Week 1.pdf; Key module information.pdf,YES,N/A,YES,
+F10,factual,What is the PMI formula?,"The PMI (Pointwise Mutual Information) formula is:
+
+𝒑(𝒘𝟏,𝒘𝟐) = log 𝒘𝟏 𝒑(𝒘𝟐)
+
+where 𝒘𝟏 and 𝒘𝟐 are two words.",Week 2.pdf; Week 4.pdf; Week 6.pdf; Week 5.pdf,PARTIAL,YES,NO,"Flattened text, lost fraction structure."
+isu01,in_scope_unanswerable,What is the formula for tf-idf?,"The formula for tf-idf (Term Frequency-Inverse Document Frequency) is:
+
+tf-idf(t, d) = tf(t, d) \* idf(t)
+
+where:
+- tf(t, d) is the term frequency of word t in document d
+- idf(t) is the inverse document frequency of word t
+
+Note that this formula assumes a binary document representation (i.e., 0 or 1 for each word), where tf(t, d) = count(t in d) and idf(t) = log(N/d), where N is the total number of documents and d is the number of documents containing word t.",Week 2.pdf; Week 7.pdf,NO,N/A,YES,Answer based on pretraining of the model 
